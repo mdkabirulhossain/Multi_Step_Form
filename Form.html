@@ -965,33 +965,33 @@
 
         // Fetch countries and phone codes
         async function fetchCountries() {
-  const dropdown = document.getElementById('country-code-dropdown');
+            const dropdown = document.getElementById('country-code-dropdown');
 
-  try {
-    const response = await fetch('https://restcountries.com/v3.1/all');
-    const countries = await response.json();
+            try {
+                const response = await fetch('https://restcountries.com/v3.1/all');
+                const countries = await response.json();
 
-    // Sort countries by name
-    const sortedCountries = countries.sort((a, b) =>
-      a.name.common.localeCompare(b.name.common)
-    );
+                // Sort countries by name
+                const sortedCountries = countries.sort((a, b) =>
+                    a.name.common.localeCompare(b.name.common)
+                );
 
-    // Populate the dropdown
-    sortedCountries.forEach(country => {
-      if (country.idd && country.idd.root) {
-        // Handle countries with missing suffixes
-        const phoneCode = `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes.join('') : ''}`;
-        const flag = country.flags && country.flags[0] ? country.flags[0] : ''; // Ensure a valid flag exists
-        const option = document.createElement('option');
-        option.value = phoneCode;
-        option.textContent = `${flag} ${country.name.common} (${phoneCode})`;
-        dropdown.appendChild(option);
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching country data:', error);
-  }
-}
+                // Populate the dropdown
+                sortedCountries.forEach(country => {
+                    if (country.idd && country.idd.root) {
+                        // Handle countries with missing suffixes
+                        const phoneCode = `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes.join('') : ''}`;
+                        const flag = country.flags && country.flags[0] ? country.flags[0] : ''; // Ensure a valid flag exists
+                        const option = document.createElement('option');
+                        option.value = phoneCode;
+                        option.textContent = `${flag} ${country.name.common} (${phoneCode})`;
+                        dropdown.appendChild(option);
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching country data:', error);
+            }
+        }
 
 
 
