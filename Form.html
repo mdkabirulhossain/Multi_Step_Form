@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Step Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    a,
+    a:hover {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    ul,
+    ol {
+      list-style-type: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      padding: 0;
+      margin: 0;
+      line-height: 0.8;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fa;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    } */
+
+    .progress-bar {
+      width: 34.8%;
+      position: fixed;
+      z-index: 11;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+    }
+
+    .progress {
+      height: 100%;
+      background: #f97316;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .form-step {
+      background: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .step-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .required {
+      color: #e53e3e;
+      font-size: 0.875rem;
+    }
+
+    .subtitle {
+      color: #4a5568;
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-prev {
+      background: white;
+      border: 1px solid #e2e8f0;
+      color: #1a202c;
+    }
+
+    .btn-next {
+      background: #f97316;
+      border: none;
+      color: white;
+      flex: 1;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .header-image {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    .title {
+      color: #000;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 22px;
+      /* margin-top: -15px; */
+    }
+
+    .subtitle {
+      color: #666;
+      margin: 5px 0px 15px 0px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .required-badge {
+      background: #f2f2f2;
+      color: black;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    .required-badgee {
+      background: #f2f2f2;
+      color: black;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    .option-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      background: white;
+      transition: all 0.2s ease;
+    }
+
+    .option-card:hover {
+      border-color: #e67e22;
+    }
+
+    .option-card.selected {
+      background: #fff5eb;
+      border: 2px solid #e67e22;
+    }
+
+    .radio-circle {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #cbd5e0;
+      border-radius: 50%;
+      margin-right: 16px;
+      position: relative;
+    }
+
+    .selected .radio-circle {
+      border-color: #e67e22;
+    }
+
+    .selected .radio-circle::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #e67e22;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .option-content {
+      flex: 1;
+    }
+
+    .option-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+      
+    }
+
+    .option-description {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .option-image {
+      width: 80px;
+      height: 60px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .next-button {
+      background: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 16px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .next-button:hover {
+      background: #dd7835;
+    }
+
+    .disabled-option {
+      color: #666;
+      font-style: italic;
+    }
+
+    .sta {
+      color: gray;
+    }
+
+    .btn_wrapper {
+      display: flex;
+      gap: 20px;
+    }
+
+    .next-button2 {
+      background: transparent;
+      color: #e67e22;
+      border: 1px solid #dd7835;
+      border-radius: 8px;
+      padding: 16px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all linear 0.2s;
+    }
+
+    .next-button2:hover {
+      background: #dd7835;
+      color: white;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    .section-title {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: #333;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .form-full {
+      grid-column: 1 / -1;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #ff8c00;
+      background-color: white;
+    }
+
+    .phone-input {
+      display: flex;
+      gap: 8px;
+    }
+
+    .phone-input select {
+      width: 120px;
+    }
+
+    .upload-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 8px 0;
+    }
+
+    .upload-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .privacy-notice {
+      font-size: 14px;
+      color: #666;
+      margin: 24px 0;
+    }
+
+    .privacy-notice a {
+      color: #ff8c00;
+      text-decoration: none;
+    }
+
+    .submit-btn {
+      background-color: #ff8c00;
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .submit-btn:hover {
+      background-color: #f07c00;
+    }
+
+    .collapse-section {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+
+    .collapse-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .collapse-content {
+      margin-top: 16px;
+      display: none;
+    }
+
+    .collapse-content.active {
+      display: block;
+    }
+       .country-code-dropdown .sss{
+        width: 20px;
+        height: 100px;
+       }
+
+      #country-code-dropdown {
+    width: 100%; /* Adjust width to your preference, e.g., 100% of the container */
+    max-width: 200px; /* Set a max width */
+    height: 40px; /* Set a fixed height */
+    border: 1px solid #ccc; /* Add a border for better visibility */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px; /* Inner padding */
+    font-size: 16px; /* Adjust font size */
+  }
+
+  #country-code-dropdown option {
+    padding: 5px; /* Padding for options */
+    width: 40px; /* Adjust width to your preference, e.g., 100% of the container */
+    max-width: 20px; /* Set a max width */
+    height: 40px; /* Set a fixed height */
+    border: 1px solid #ccc; /* Add a border for better visibility */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px; /* Inner padding */
+    font-size: 16px; /* Adjust font size */
+  }
+  .upload-btn {
+
+  padding: 5x 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.aaa{
+  width: 100%; /* Adjust width to your preference, e.g., 100% of the container */
+    max-width: 200px; /* Set a max width */
+    height: 40px;
+}
+
+ 
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="progress-bar">
+      <div class="progress" style="width: 33.33%"></div>
+    </div>
+    <!-- Step 1 -->
+    <div class="form-step" id="step1">
+      <div>
+        <img
+          src="https://user-info.reuzenpanda.nl/product-template-service/product-templates/product-templates/14a6590d-58a8-4cfe-9463-213168176f57/image.png?d=1737526637111"
+          alt="Dakkapel voorbeeld" class="header-image" />
+
+        <h4 class="title">
+          🔴EINDELIJK! Jouw Droom-Dakkapel Vanaf €61,97 per maand! Stel Kort
+          jouw eigen Dakkapel samen, In Minder Dan 30 Seconden!
+        </h4>
+        <p class="subtitle">
+          Duurt echt maar 30 seconden! Het is LETTERLIJK vanaf 6 tientjes per
+          maand!
+        </p>
+
+        <div class="section-header">
+          <h4 class="section-title">Soort Dakkapel</h4>
+          <p class="required-badge">Verplicht</p>
+        </div>
+
+        <div class="option-card" data-value="plat">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <h3 class="option-title">Plat dak</h3>
+            <p class="option-description">Aanbevolen en goedkoper!</p>
+          </div>
+          <img
+            src="https://user-info.reuzenpanda.nl/product-template-service/product-templates/product-templates/14a6590d-58a8-4cfe-9463-213168176f57/choices/null/choice_template_image-Dakkapel plat dak.jpgjpg?t=885"
+            alt="Plat dak" class="option-image" />
+        </div>
+
+        <div class="option-card" data-value="schuin">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <h3 class="option-title">Schuin dak</h3>
+            <p class="option-description">
+              Hellingshoek op locatie bespreekbaar :)
+            </p>
+          </div>
+          <img
+            src="https://user-info.reuzenpanda.nl/product-template-service/product-templates/product-templates/14a6590d-58a8-4cfe-9463-213168176f57/choices/null/choice_template_image-Dakkapel Schuin dak.jpgjpg?t=607"
+            alt="Schuin dak" class="option-image" />
+        </div>
+
+        <div class="option-card" data-value="unknown">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <p class="option-title disabled-option">
+              Ik weet het nog niet...
+            </p>
+          </div>
+        </div>
+
+        <button class="next-button" onclick="nextStep()">Volgende →</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="form-step hidden" id="step2">
+      <div>
+        <img
+          src="https://user-info.reuzenpanda.nl/product-template-service/product-templates/product-templates/14a6590d-58a8-4cfe-9463-213168176f57/image.png?d=1737526637111"
+          alt="Dakkapel voorbeeld" class="header-image" />
+
+        <h4 class="title">
+          🔴EINDELIJK! Jouw Droom-Dakkapel Vanaf €61,97 per maand! Stel Kort
+          jouw eigen Dakkapel samen, In Minder Dan 30 Seconden!
+        </h4>
+        <p class="subtitle">
+          Duurt echt maar 30 seconden! Het is LETTERLIJK vanaf 6 tientjes per
+          maand!
+        </p>
+
+        <div class="section-header">
+          <div class="">
+            <div class="section-title">Gewenste Breedte?</div>
+            <div class="sta">
+              Hoe breed wordt de dakkapel van jouw dromen? Schatting!
+            </div>
+          </div>
+          <p class="required-badge">Verplicht</p>
+        </div>
+
+        <div class="option-card" data-value="3 Meter">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <p class="option-title disabled-option">Minder dan 3 Meter</p>
+          </div>
+        </div>
+
+        <div class="option-card" data-value="3-4 Meter">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <p class="option-title disabled-option">3 - 4 Meter</p>
+          </div>
+        </div>
+
+        <div class="option-card" data-value="4-5 Meter">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <p class="option-title disabled-option">4 - 5 Meter</p>
+          </div>
+        </div>
+
+        <div class="option-card" data-value="5 Meter">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <p class="option-title disabled-option">5 Meter</p>
+          </div>
+        </div>
+
+        <div class="btn_wrapper">
+          <button class="next-button2" onclick="prevStep()">Vorige</button>
+          <button class="next-button" onclick="nextStep()">Volgende →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="form-step hidden" id="step3">
+      <div>
+        <img
+          src="https://user-info.reuzenpanda.nl/product-template-service/product-templates/product-templates/14a6590d-58a8-4cfe-9463-213168176f57/image.png?d=1737526637111"
+          alt="Dakkapel voorbeeld" class="header-image" />
+
+        <h4 class="title">
+          🔴EINDELIJK! Jouw Droom-Dakkapel Vanaf €61,97 per maand! Stel Kort
+          jouw eigen Dakkapel samen, In Minder Dan 30 Seconden!
+        </h4>
+        <p class="subtitle">
+          Duurt echt maar 30 seconden! Het is LETTERLIJK vanaf 6 tientjes per
+          maand!
+        </p>
+
+        <div class="section-header">
+          <div class="">
+            <div class="section-title">Materiaal Dakkapel</div>
+            <div class="sta">
+              Van welk materiaal moet jouw Droom-Dakkapel worden?
+            </div>
+          </div>
+          <div class="required-badge">Verplicht</div>
+        </div>
+
+        <div class="option-card" data-value="Hout">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <div class="option-title">Hout</div>
+            <!-- <div class="option-description">Aanbevolen en goedkoper!</div> -->
+          </div>
+          <img
+            src="https://user-info.reuzenpanda.nl/product-template-service/product-templates/product-templates/14a6590d-58a8-4cfe-9463-213168176f57/choices/8aa36239-8738-4451-902d-f51a92e1167f/choice_template_image-Houten Dakkapel.jpgjpg?t=106"
+            alt="Plat dak" class="option-image" />
+        </div>
+
+        <div class="option-card" data-value="Keralit">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <div class="option-title">Keralit</div>
+            <div class="option-description">
+              Hoogste kwaliteit materiaal en meest gekozen! Extreem duurzaam
+              en sterk!
+            </div>
+          </div>
+          <img
+            src="https://user-info.reuzenpanda.nl/product-template-service/product-templates/product-templates/14a6590d-58a8-4cfe-9463-213168176f57/choices/aa517c13-f327-4584-8607-59b516dedb6d/choice_template_image-Keralit Dakkapel.jpgjpg?t=106"
+            alt="Schuin dak" class="option-image" />
+        </div>
+
+        <div class="option-card" data-value="Trespa">
+          <div class="radio-circle"></div>
+          <div class="option-content">
+            <div class="option-title">Trespa</div>
+            <div class="option-description">
+              Strakke Trespa bekleding. Zeer duurzaam!
+            </div>
+          </div>
+          <img
+            src="https://user-info.reuzenpanda.nl/product-template-service/product-templates/product-templates/14a6590d-58a8-4cfe-9463-213168176f57/choices/60b6b5cd-5b52-4451-ad84-08b64178a827/choice_template_image-Trespa Dakkapel.pngpng?t=957"
+            alt="Schuin dak" class="option-image" />
+        </div>
+
+        <div class="btn_wrapper">
+          <button class="next-button2" onclick="prevStep()">Vorige</button>
+          <button class="next-button" onclick="nextStep()">Volgende →</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- step 4 -->
+    <div class="form-step hidden" id="step4">
+      <form id="contactForm" onsubmit="return handleSubmit(event)">
+        <div class="section-title">Contactgegevens</div>
+        <div class="form-grid">
+          <div class="input-group form-full">
+            <input type="email" name="email" placeholder="E-mailadres" required>
+          </div>
+
+          <div class="input-group form-full">
+            <div class="phone-input">
+              <select id="country-code-dropdown" onclick="fetchCountries()">
+                <!-- <option value="+31">🇳🇱 +31</option> -->
+                <div style="background: red;" class="aaa">
+                  <option  value="" class="sss" disabled selected>Select your country</option>
+                </div>
+              </select>
+              <input type="tel" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">Adresgegevens</div>
+        <div class="form-grid">
+          <div class="input-group form-full">
+            <select name="country" required>
+              <option value="">----Select---</option>
+              <option value="">Nederland</option>
+              <option value="">Belgie</option>
+              <option value="">Duitsland</option>
+              <option value="">Overig</option>
+            </select>
+            <small style="color: #666; margin-top: 4px;">Staat je land er niet tussen? Kies dan overige.</small>
+          </div>
+
+          <div class="input-group">
+            <input type="text" name="firstName" placeholder="Voornaam" required>
+          </div>
+
+          <div class="input-group">
+            <input type="text" name="lastName" placeholder="Achternaam" required>
+          </div>
+
+          <div class="input-group">
+            <input type="text" name="postcode" placeholder="Postcode" required>
+          </div>
+
+          <div class="input-group">
+            <input type="text" name="houseNumber" placeholder="Huisnummer" required>
+          </div>
+
+          <div class="input-group">
+            <input type="text" name="city" placeholder="Plaats" required>
+          </div>
+
+          <div class="input-group">
+            <input type="text" name="street" placeholder="Straatnaam" required>
+          </div>
+        </div>
+
+        <div class="collapse-section">
+          <div class="collapse-header" onclick="toggleCollapse()">
+            <div class="section-title" style="margin: 0;">Opmerking toevoegen</div>
+            <span class="collapse-icon">+</span>
+          </div>
+          <div class="collapse-content" id="collapseContent">
+            <textarea rows="4" name="note" placeholder="Waar kunnen wij nog rekening mee houden?"></textarea>
+            <!-- <button type="button" class="upload-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              Foto uploaden
+            </button> -->
+            <div>
+              <button type="button" class="upload-btn" onclick="triggerFileUpload()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+                Foto uploaden
+              </button>
+              <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)" />
+            </div>
+            <!-- <div id="fileInfo"></div> -->
+          </div>
+        </div>
+
+
+        <div class="privacy-notice">
+          Door op de onderstaande knop te drukken ga je akkoord dat je gegevens worden verwerkt volgens ons
+          <a href="#" target="_blank">privacy beleid</a>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          Bevestig & vraag aan
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </button>
+      </form>
+    </div>
+
+
+  
+
+
+
+  </div>
+
+  <script>
+
+let data = [];
+
+let currentStep = 1;
+let totalSteps = 4;
+let selectedOptions = { step1: null, step2: null, step3: null }; // Store selected options for each step
+
+const optionCards = document.querySelectorAll('.option-card');
+const nextButton = document.querySelector('.next-button');
+
+// Function to get the Verplicht element for the current step
+// function getCurrentVerplicht() {
+//   return document.querySelector(#step${currentStep} .required-badge);
+// }
+function getCurrentVerplicht() {
+  return document.querySelector(`#step${currentStep} .required-badge`);
+}
+
+
+// Add event listeners to option cards
+optionCards.forEach(card => {
+  card.addEventListener('click', () => {
+    // Remove selection from all cards
+    optionCards.forEach(c => c.classList.remove('selected'));
+    // Add selection to clicked card
+    card.classList.add('selected');
+    selectedOptions[`step${currentStep}`] = card.dataset.value; // Store selected option for the current step
+
+    // Update Verplicht styles for the current step
+    const currentVerplicht = getCurrentVerplicht();
+    if (currentVerplicht) {
+      currentVerplicht.style.backgroundColor = '#F2F2F2';
+      currentVerplicht.style.color = '#000';
+    }
+
+    nextButton.disabled = false; // Enable the "Next" button
+  });
+});
+
+// Update progress bar
+function updateProgress() {
+  let progress = document.querySelector(".progress");
+  let width = (currentStep / totalSteps) * 100;
+  progress.style.width = width + "%";
+}
+
+// Move to the next step
+function nextStep() {
+  const currentVerplicht = getCurrentVerplicht(); // Get Verplicht for the current step
+
+  if (!selectedOptions[`step${currentStep}`]) {
+    if (currentVerplicht) {
+      currentVerplicht.style.backgroundColor = '#FBE9E9';
+      currentVerplicht.style.color = '#E24624';
+    } else {
+      console.error('Verplicht element not found for current step!');
+    }
+    nextButton.disabled = true; // Disable the "Next" button
+  } else {
+    if (currentVerplicht) {
+      currentVerplicht.style.backgroundColor = '#F2F2F2';
+      currentVerplicht.style.color = '#000';
+    }
+    nextButton.disabled = false; // Enable the "Next" button
+
+    // Save the selected option for the current step to the data array
+    const existingStep = data.find(d => d.step === currentStep);
+    if (existingStep) {
+      existingStep.value = selectedOptions[`step${currentStep}`];
+    } else {
+      data.push({ step: currentStep, value: selectedOptions[`step${currentStep}`] });
+    }
+
+    if (currentStep < totalSteps) {
+      document.getElementById("step" + currentStep).classList.add("hidden");
+      currentStep++;
+      document.getElementById("step" + currentStep).classList.remove("hidden");
+      updateProgress();
+      selectedOptions[`step${currentStep}`] = null; // Reset selected option for the new step
+    }
+  }
+  // console.log('Selected options:', selectedOptions);
+  // console.log('Data array:', data);
+}
+
+// Move to the previous step
+function prevStep() {
+  if (currentStep > 1) {
+    document.getElementById("step" + currentStep).classList.add("hidden");
+    currentStep--;
+    document.getElementById("step" + currentStep).classList.remove("hidden");
+    updateProgress();
+  }
+}
+
+// Initialize the first step
+document.addEventListener('DOMContentLoaded', () => {
+  nextButton.disabled = true; // Disable the "Next" button by default
+
+  // Initialize Verplicht for the first step
+  const currentVerplicht = getCurrentVerplicht();
+  if (currentVerplicht && !selectedOptions[`step${currentStep}`]) {
+    currentVerplicht.style.backgroundColor = '#FBE9E9';
+    currentVerplicht.style.color = '#E24624';
+  }
+});
+
+// console.log(data);
+
+
+let formDataArray = []; // Array to store submitted form data
+
+function toggleCollapse() {
+  const content = document.getElementById('collapseContent');
+  content.classList.toggle('active');
+  const icon = document.querySelector('.collapse-icon');
+  icon.textContent = content.classList.contains('active') ? '-' : '+';
+}
+
+// Handle form submission
+function handleSubmit(event) {
+  event.preventDefault();
+
+  // Get form data
+  const form = document.getElementById('contactForm');
+  const formData = new FormData(form);
+
+  // Extract values from the form
+  const email = formData.get('email');
+  const phone = form.querySelector('input[type="tel"]').value;
+  const country = formData.get('country');
+  const firstName = formData.get('firstName');
+  const lastName = formData.get('lastName');
+  const postcode = formData.get('postcode');
+  const houseNumber = formData.get('houseNumber');
+  const city = formData.get('city');
+  const street = formData.get('street');
+  const note = formData.get('note');
+
+  // Create an object with the form data
+  const formDataObject = {
+    email,
+    phone,
+    country,
+    firstName,
+    lastName,
+    postcode,
+    houseNumber,
+    city,
+    street,
+    note,
+  };
+
+  // Add the form data object to the formDataArray
+  formDataArray.push(formDataObject);
+
+  // Log the entire formDataArray to verify data storage
+  console.log('Form Data Array:', formDataArray);
+  console.log('Data :', data);
+
+
+  // Reset the form after submission
+  form.reset();
+  console.log('Form submitted successfully!');
+}
+
+  // Fetch countries and phone codes
+  async function fetchCountries() {
+  const dropdown = document.getElementById('country-code-dropdown');
+
+  try {
+    const response = await fetch('https://restcountries.com/v3.1/all');
+    const countries = await response.json();
+
+    // console.log("rest countries",countries); // Inspect the data structure
+
+    // Sort countries by name
+    const sortedCountries = countries.sort((a, b) =>
+      a.name.common.localeCompare(b.name.common)
+    );
+
+    // Populate the dropdown
+    sortedCountries.forEach(country => {
+      if (country.idd && country.idd.root && country.idd.suffixes) {
+        const phoneCode = ${country.idd.root}${country.idd.suffixes.join('')};
+        const option = document.createElement('option');
+        option.value = phoneCode;
+        option.textContent = ${country.flag || ''} ${country.name.common} (${phoneCode});
+        dropdown.appendChild(option);
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching country data:', error);
+  }
+}
+
+
+// Trigger the file input when the button is clicked
+function triggerFileUpload() {
+  const fileInput = document.getElementById('fileInput');
+  fileInput.click(); // Simulates a click on the hidden file input
+}
+
+// Handle file selection
+function handleFileUpload(event) {
+  const file = event.target.files[0]; // Get the first selected file
+  const fileInfo = document.getElementById('fileInfo');
+
+  if (file) {
+    // Display file information
+    fileInfo.innerHTML = `
+      <p><strong>File Name:</strong> ${file.name}</p>
+      <p><strong>File Size:</strong> ${(file.size / 1024).toFixed(2)} KB</p>
+      <p><strong>File Type:</strong> ${file.type || 'Unknown'}</p>
+    `;
+    
+    // Example: Upload the file to a server
+    uploadFile(file);
+  } else {
+    fileInfo.innerHTML = '<p>No file selected.</p>';
+  }
+}
+
+// Simulated file upload (you can replace this with actual server logic)
+function uploadFile(file) {
+  console.log('Uploading file:', file.name);
+
+  // Simulate upload process (replace with your server endpoint)
+  setTimeout(() => {
+    console.log('File uploaded successfully:', file.name);
+    alert('File uploaded successfully!');
+  }, 1000);
+}
+
+
+// document.addEventListener('DOMContentLoaded', fetchCountries);
+// document.getElementById('contactForm').addEventListener('submit', handleSubmit);
+
+
+
+  </script>
+</body>
+
+</html>
