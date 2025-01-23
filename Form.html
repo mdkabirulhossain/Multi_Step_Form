@@ -47,7 +47,8 @@
     .container {
       max-width: 700px;
       margin: 0 auto;
-      padding: 20px;
+      /* padding: 20px; */
+      padding-top: 20px;
     }
 
     /* .container {
@@ -57,13 +58,17 @@
     } */
 
     .progress-bar {
-      width: 34.8%;
+      /* width: 34.8%; */
       position: fixed;
       z-index: 11;
       height: 8px;
       background: #e2e8f0;
       border-radius: 4px;
       margin-bottom: 2rem;
+      width: 100%; /* Let it take full width */
+      left: 0; /* Ensure it starts from the left edge */
+      transform: translateX(calc((100vw - 700px) / 2)); /* Center it inside the container's boundaries */
+      max-width: 690px; /* Match the container's max width */
     }
 
     .progress {
