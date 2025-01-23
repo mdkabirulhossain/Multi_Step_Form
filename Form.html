@@ -961,10 +961,10 @@ function handleSubmit(event) {
     // Populate the dropdown
     sortedCountries.forEach(country => {
       if (country.idd && country.idd.root && country.idd.suffixes) {
-        const phoneCode = ${country.idd.root}${country.idd.suffixes.join('')};
+        const phoneCode = `${country.idd.root}${country.idd.suffixes.join('')}`;
         const option = document.createElement('option');
         option.value = phoneCode;
-        option.textContent = ${country.flag || ''} ${country.name.common} (${phoneCode});
+        option.textContent = `${country.flag || ''} ${country.name.common} (${phoneCode})`;
         dropdown.appendChild(option);
       }
     });
