@@ -47,30 +47,28 @@
         .container {
             max-width: 700px;
             margin: 0 auto;
-            padding: 20px;
+            /* padding: 20px; */
+            padding-top: 20px;
         }
 
-        .nav {
-            width: 100%;
-            background: #fff;
-            padding: 30px 0px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 11111;
-            border-bottom: 2px solid #EFEFEF;
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
+        /* .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    } */
 
         .progress-bar {
-            max-width: 700px;
-            margin: 0 auto;
-            width: 100%;
+            /* width: 34.8%; */
+            position: fixed;
+            z-index: 11;
             height: 8px;
             background: #e2e8f0;
             border-radius: 4px;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .progress {
@@ -79,23 +77,6 @@
             border-radius: 4px;
             transition: width 0.3s ease;
         }
-
-        /* .progress-bar {
-      width: 34.8%;
-      position: fixed;
-      z-index: 11;
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: 4px;
-      margin-bottom: 2rem;
-    }
-
-    .progress {
-      height: 100%;
-      background: #f97316;
-      border-radius: 4px;
-      transition: width 0.3s ease;
-    } */
 
         .form-step {
             background: white;
@@ -447,21 +428,45 @@
             display: block;
         }
 
+        .country-code-dropdown .sss {
+            width: 20px;
+            height: 100px;
+        }
+
         #country-code-dropdown {
+            width: 100%;
+            /* Adjust width to your preference, e.g., 100% of the container */
             max-width: 200px;
+            /* Set a max width */
+            height: 40px;
+            /* Set a fixed height */
             border: 1px solid #ccc;
+            /* Add a border for better visibility */
             border-radius: 5px;
+            /* Rounded corners */
             padding: 5px;
+            /* Inner padding */
             font-size: 16px;
+            /* Adjust font size */
         }
 
         #country-code-dropdown option {
-            max-width: 200px;
-            width: 40px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
             padding: 5px;
+            /* Padding for options */
+            width: 40px;
+            /* Adjust width to your preference, e.g., 100% of the container */
+            max-width: 20px;
+            /* Set a max width */
+            height: 40px;
+            /* Set a fixed height */
+            border: 1px solid #ccc;
+            /* Add a border for better visibility */
+            border-radius: 5px;
+            /* Rounded corners */
+            padding: 5px;
+            /* Inner padding */
             font-size: 16px;
+            /* Adjust font size */
         }
 
         .upload-btn {
@@ -475,30 +480,21 @@
             gap: 10px;
         }
 
-        .logo img {
-            margin-left: 50px;
-            width: 50px;
-            height: 50px;
-        }
-
-        #step4 {
-            margin-top: 80px;
+        .aaa {
+            width: 100%;
+            /* Adjust width to your preference, e.g., 100% of the container */
+            max-width: 200px;
+            /* Set a max width */
+            height: 40px;
         }
     </style>
 </head>
 
 <body>
-    <div class="nav">
-        <div class="logo">
-            <img src="https://user-info.reuzenpanda.nl/company-profiles/ed7efb7d-9bd3-42de-8a2a-2e3877ff1cac/logo.jpeg?t=514"
-                alt="logo">
-        </div>
+    <div class="container">
         <div class="progress-bar">
             <div class="progress" style="width: 33.33%"></div>
         </div>
-    </div>
-    <div class="container">
-
         <!-- Step 1 -->
         <div class="form-step" id="step1">
             <div>
@@ -608,7 +604,7 @@
                 </div>
 
                 <div class="btn_wrapper">
-                    <button class="next-button2" onclick="prevStep()">← Vorige</button>
+                    <button class="next-button2" onclick="prevStep()">Vorige</button>
                     <button class="next-button" onclick="nextStep()">Volgende →</button>
                 </div>
             </div>
@@ -692,11 +688,14 @@
                     </div>
 
                     <div class="input-group form-full">
-                        <div class="phone-input" style="display: flex;">
+                        <div class="phone-input">
                             <select id="country-code-dropdown" onclick="fetchCountries()">
-                                <!-- <option value="+31">🇳🇱 +31</option> -->
                                 <option value="" class="sss" disabled selected>Select your country</option>
-
+                                <option value="+31" class="sss"> Nederland +31</option>
+                                <option value="+32" class="sss"> Belgie +32</option>
+                                <option value="+49" class="sss"> Duitsland +49</option>
+                                <option value="+1" class="sss"> Overig +1</option>
+                               
                             </select>
                             <input type="tel" required>
                         </div>
@@ -708,10 +707,10 @@
                     <div class="input-group form-full">
                         <select name="country" required>
                             <option value="">----Select---</option>
-                            <option value="Nederland">Nederland</option>
-                            <option value="Belgie">Belgie</option>
-                            <option value="Duitsland">Duitsland</option>
-                            <option value="Overig">Overig</option>
+                            <option value="">Nederland</option>
+                            <option value="">Belgie</option>
+                            <option value="">Duitsland</option>
+                            <option value="">Overig</option>
                         </select>
                         <small style="color: #666; margin-top: 4px;">Staat je land er niet tussen? Kies dan
                             overige.</small>
@@ -750,6 +749,14 @@
                     <div class="collapse-content" id="collapseContent">
                         <textarea rows="4" name="note"
                             placeholder="Waar kunnen wij nog rekening mee houden?"></textarea>
+                        <!-- <button type="button" class="upload-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              Foto uploaden
+            </button> -->
                         <div>
                             <button type="button" class="upload-btn" onclick="triggerFileUpload()">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -791,7 +798,7 @@
 
     <script>
 
-        let data = {};
+        let data = [];
 
         let currentStep = 1;
         let totalSteps = 4;
@@ -801,9 +808,13 @@
         const nextButton = document.querySelector('.next-button');
 
         // Function to get the Verplicht element for the current step
+        // function getCurrentVerplicht() {
+        //   return document.querySelector(#step${currentStep} .required-badge);
+        // }
         function getCurrentVerplicht() {
             return document.querySelector(`#step${currentStep} .required-badge`);
         }
+
 
         // Add event listeners to option cards
         optionCards.forEach(card => {
@@ -832,6 +843,7 @@
             progress.style.width = width + "%";
         }
 
+        // Move to the next step
         function nextStep() {
             const currentVerplicht = getCurrentVerplicht(); // Get Verplicht for the current step
 
@@ -850,8 +862,13 @@
                 }
                 nextButton.disabled = false; // Enable the "Next" button
 
-                // Update the `data` object
-                data[`step${currentStep}`] = selectedOptions[`step${currentStep}`];
+                // Save the selected option for the current step to the data array
+                const existingStep = data.find(d => d.step === currentStep);
+                if (existingStep) {
+                    existingStep.value = selectedOptions[`step${currentStep}`];
+                } else {
+                    data.push({ step: currentStep, value: selectedOptions[`step${currentStep}`] });
+                }
 
                 if (currentStep < totalSteps) {
                     document.getElementById("step" + currentStep).classList.add("hidden");
@@ -859,42 +876,11 @@
                     document.getElementById("step" + currentStep).classList.remove("hidden");
                     updateProgress();
                     selectedOptions[`step${currentStep}`] = null; // Reset selected option for the new step
-                } else {
-                    // Final step - log the object
-                    console.log("Final data object:", data);
                 }
             }
+            // console.log('Selected options:', selectedOptions);
+            // console.log('Data array:', data);
         }
-
-        const currentVerplicht = getCurrentVerplicht(); // Get Verplicht for the current step
-
-        if (!selectedOptions[`step${currentStep}`]) {
-            if (currentVerplicht) {
-                currentVerplicht.style.backgroundColor = '#FBE9E9';
-                currentVerplicht.style.color = '#E24624';
-            } else {
-                console.error('Verplicht element not found for current step!');
-            }
-            nextButton.disabled = true; // Disable the "Next" button
-        } else {
-            if (currentVerplicht) {
-                currentVerplicht.style.backgroundColor = '#F2F2F2';
-                currentVerplicht.style.color = '#000';
-            }
-            nextButton.disabled = false; // Enable the "Next" button
-
-            // Directly use `selectedOptions` as the data object
-            console.log('Selected options object:', selectedOptions);
-
-            if (currentStep < totalSteps) {
-                document.getElementById("step" + currentStep).classList.add("hidden");
-                currentStep++;
-                document.getElementById("step" + currentStep).classList.remove("hidden");
-                updateProgress();
-                selectedOptions[`step${currentStep}`] = null; // Reset selected option for the new step
-            }
-        }
-
 
         // Move to the previous step
         function prevStep() {
@@ -928,49 +914,6 @@
             content.classList.toggle('active');
             const icon = document.querySelector('.collapse-icon');
             icon.textContent = content.classList.contains('active') ? '-' : '+';
-        }
-
-        // Trigger the file input when the button is clicked
-
-
-        let fileArray = []; // Renamed to fileArray
-
-        function triggerFileUpload() {
-            const fileInput = document.getElementById('fileInput');
-            fileInput.click(); // Simulates a click on the hidden file input
-        }
-
-        // Handle file selection
-        function handleFileUpload(event) {
-            const selectedFile = event.target.files[0]; // Get the first selected file
-            const fileInfo = document.getElementById('fileInfo');
-
-            if (selectedFile) {
-                // Add file information to fileArray
-                fileArray.push({
-                    name: selectedFile.name,
-                    size: (selectedFile.size / 1024).toFixed(2), // Convert size to KB
-                    type: selectedFile.type || 'Unknown'
-                });
-
-                // console.log('Current file array:', fileArray);
-
-                // Example: Upload the file to a server
-                uploadFile(selectedFile);
-            } else {
-                fileInfo.innerHTML = '<p>No file selected.</p>';
-            }
-        }
-
-        // Simulated file upload (you can replace this with actual server logic)
-        function uploadFile(selectedFile) {
-            // console.log('Uploading file:', selectedFile.name);
-
-            // Simulate upload process (replace with your server endpoint)
-            setTimeout(() => {
-                // console.log('File uploaded successfully:', selectedFile.name);
-
-            }, 1000);
         }
 
         // Handle form submission
@@ -1011,45 +954,15 @@
             formDataArray.push(formDataObject);
 
             // Log the entire formDataArray to verify data storage
-            console.log('Form ', formDataArray);
-            console.log('select:', data);
-            console.log('file :', fileArray);
+            console.log('Form Data Array:', formDataArray);
+            console.log('Data :', data);
 
-            const payload = {
-                FormData: formDataArray, step: data , FileInfo: fileArray
 
-            }
-            fetch('https://services.leadconnectorhq.com/hooks/JEWjgGMrcjXad6MYR7tB/webhook-trigger/e514a818-6b0c-4478-89c8-5bad9ff028a3', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                })
-                .then(data => {
-                    console.log('Success:', data);
-                    alert('Form submitted successfully!');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while submitting the form.');
-                });
             // Reset the form after submission
             form.reset();
-            console.log(payload)
             console.log('Form submitted successfully!');
         }
 
-    
-
-        // Fetch countries and phone codes
         // Fetch countries and phone codes
         async function fetchCountries() {
             const dropdown = document.getElementById('country-code-dropdown');
@@ -1065,12 +978,13 @@
 
                 // Populate the dropdown
                 sortedCountries.forEach(country => {
-                    if (country.idd && country.idd.root && country.idd.suffixes) {
-                        // Use only the first suffix to avoid long codes
-                        const phoneCode = `${country.idd.root}${country.idd.suffixes[0]}`;
+                    if (country.idd && country.idd.root) {
+                        // Handle countries with missing suffixes
+                        const phoneCode = `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes.join('') : ''}`;
+                        const flag = country.flags && country.flags[0] ? country.flags[0] : ''; // Ensure a valid flag exists
                         const option = document.createElement('option');
                         option.value = phoneCode;
-                        option.textContent = `${country.flag || ''} ${country.name.common} (${phoneCode})`;
+                        option.textContent = `${flag} ${country.name.common} (${phoneCode})`;
                         dropdown.appendChild(option);
                     }
                 });
@@ -1080,44 +994,44 @@
         }
 
 
-        //Data sent
-        async function sendDataToServer() {
-            const url = "https://services.leadconnectorhq.com/hooks/JEWjgGMrcjXad6MYR7tB/webhook-trigger/4973107e-a3f8-4bcd-8555-3637fa62fb03"; // Replace with the actual API URL
 
-            // Combine all data into a single object
-            const payload = {
-                formData: formDataArray,
-                stepsData: data,
-                uploadedFiles: fileArray
-            };
+        // Trigger the file input when the button is clicked
+        function triggerFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            fileInput.click(); // Simulates a click on the hidden file input
+        }
 
-            try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer YOUR_ACCESS_TOKEN",
-                    },
-                    body: JSON.stringify(payload),
-                });
+        // Handle file selection
+        function handleFileUpload(event) {
+            const file = event.target.files[0]; // Get the first selected file
+            const fileInfo = document.getElementById('fileInfo');
 
-                if (!response.ok) {
-                    // If the response status is not OK (200-299), throw an error
-                    const errorResponse = await response.json();
-                    throw new Error(
-                        `Error: ${errorResponse.status || response.status}. Trace ID: ${errorResponse.traceId || "N/A"}`
-                    );
-                }
+            if (file) {
+                // Display file information
+                fileInfo.innerHTML = `
+      <p><strong>File Name:</strong> ${file.name}</p>
+      <p><strong>File Size:</strong> ${(file.size / 1024).toFixed(2)} KB</p>
+      <p><strong>File Type:</strong> ${file.type || 'Unknown'}</p>
+    `;
 
-                // Parse and log the response from the server
-                const result = await response.json();
-                // console.log("Server response:", result);
-            } catch (error) {
-                console.error("Failed to submit data:", error.message);
-
+                // Example: Upload the file to a server
+                uploadFile(file);
+            } else {
+                fileInfo.innerHTML = '<p>No file selected.</p>';
             }
         }
-        sendDataToServer()
+
+        // Simulated file upload (you can replace this with actual server logic)
+        function uploadFile(file) {
+            console.log('Uploading file:', file.name);
+
+            // Simulate upload process (replace with your server endpoint)
+            setTimeout(() => {
+                console.log('File uploaded successfully:', file.name);
+                alert('File uploaded successfully!');
+            }, 1000);
+        }
+
 
         // document.addEventListener('DOMContentLoaded', fetchCountries);
         // document.getElementById('contactForm').addEventListener('submit', handleSubmit);
