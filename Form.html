@@ -921,7 +921,8 @@
         // console.log(data);
 
 
-        let formDataArray = []; // Array to store submitted form data
+        let formDataArray = {}; // Array to store submitted form data
+        let formDataObject = {}; // Array to store submitted form data
 
         function toggleCollapse() {
             const content = document.getElementById('collapseContent');
@@ -993,7 +994,7 @@
             const street = formData.get('street');
             const note = formData.get('note');
 
-            // Create an object with the form data
+            // Create a single object with the form data
             const formDataObject = {
                 email,
                 phone,
@@ -1007,18 +1008,13 @@
                 note,
             };
 
-            // Add the form data object to the formDataArray
-            formDataArray.push(formDataObject);
-
-            // Log the entire formDataArray to verify data storage
-            console.log('Form ', formDataArray);
-            console.log('select:', data);
-            console.log('file :', fileArray);
-
+            // Prepare the payload with a single object
             const payload = {
-                FormData: formDataArray, step: data , FileInfo: fileArray
+                FormData: formDataObject, // Single object
+                step: data,
+                FileInfo: fileArray,
+            };
 
-            }
             fetch('https://services.leadconnectorhq.com/hooks/JEWjgGMrcjXad6MYR7tB/webhook-trigger/e514a818-6b0c-4478-89c8-5bad9ff028a3', {
                 method: 'POST',
                 headers: {
@@ -1035,19 +1031,19 @@
                 })
                 .then(data => {
                     console.log('Success:', data);
-                    alert('Form submitted successfully!');
+                    
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred while submitting the form.');
+                   
                 });
+
             // Reset the form after submission
             form.reset();
-            console.log(payload)
+            console.log(payload);
             console.log('Form submitted successfully!');
         }
 
-    
 
         // Fetch countries and phone codes
         // Fetch countries and phone codes
@@ -1086,7 +1082,7 @@
 
             // Combine all data into a single object
             const payload = {
-                formData: formDataArray,
+                formData: formDataObject,
                 stepsData: data,
                 uploadedFiles: fileArray
             };
