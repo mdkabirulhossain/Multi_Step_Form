@@ -53,7 +53,7 @@
 
       // Hide all forms initially
       formClasses.forEach(className => {
-        const form = document.querySelector(.${className});
+        const form = document.querySelector(`.${className}`);
         if (form) {
           form.style.display = 'none';
         }
@@ -62,7 +62,7 @@
       // Show the selected form
       const selectedValue = this.value;
       if (formClasses.includes(selectedValue)) {
-        const selectedForm = document.querySelector(.${selectedValue});
+        const selectedForm = document.querySelector(`.${selectedValue}`);
         if (selectedForm) {
           selectedForm.style.display = 'block';
         }
