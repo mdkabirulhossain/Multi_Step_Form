@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM Form Toggle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    /* Ensure all forms are hidden initially */
+    .ATTORNEY, .REALESTATEAGENT, .REALESTATEBROKER, .PROPERTYMANAGER, .INVESTOR, .LENDER, .TITLEAGENT, .TRANSACTIONCOORDINATOR, .WHOLESALER {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Signup</h1>
+  <label for="user-type">Choose an option:</label>
+  <select id="user-type">
+    <option value="">-- Select --</option>
+    <option value="ATTORNEY">ATTORNEY</option>
+    <option value="REALESTATEAGENT">REAL ESTATE AGENT</option>
+    <option value="REALESTATEBROKER">REAL ESTATE BROKER</option>
+    <option value="PROPERTYMANAGER">PROPERTY MANAGER</option>
+    <option value="INVESTOR">INVESTOR</option>
+    <option value="LENDER">LENDER</option>
+    <option value="TITLEAGENT">TITLE AGENT</option>
+    <option value="TRANSACTIONCOORDINATOR">TRANSACTION COORDINATOR</option>
+    <option value="WHOLESALER">WHOLESALER</option>
+  </select>
+
+  <script>
+    document.getElementById('user-type').addEventListener('change', function() {
+      // List of all classes corresponding to the forms
+      const formClasses = [
+        'ATTORNEY',
+        'REALESTATEAGENT',
+        'REALESTATEBROKER',
+        'PROPERTYMANAGER',
+        'INVESTOR',
+        'LENDER',
+        'TITLEAGENT',
+        'TRANSACTIONCOORDINATOR',
+        'WHOLESALER'
+      ];
+
+      // Hide all forms initially
+      formClasses.forEach(className => {
+        const form = document.querySelector(.${className});
+        if (form) {
+          form.style.display = 'none';
+        }
+      });
+
+      // Show the selected form
+      const selectedValue = this.value;
+      if (formClasses.includes(selectedValue)) {
+        const selectedForm = document.querySelector(.${selectedValue});
+        if (selectedForm) {
+          selectedForm.style.display = 'block';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
