@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { width: 50%; margin: auto; padding: 20px; }
+        .progress-bar { height: 20px; background: #ddd; width: 100%; position: relative; }
+        .progress { height: 100%; width: 0%; background: green; transition: width 0.5s; }
+        .hidden { display: none; }
+        .form-page { margin-top: 20px; }
+        button { margin-top: 10px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <div id="page1" class="form-page">
+            <button onclick="nextPage()">Start</button>
+        </div>
+        <div id="page2" class="form-page hidden">
+            <label>Enter your name:</label>
+            <input type="text" id="name" required>
+            <button onclick="validateAndNext(2, 'name')">Next</button>
+        </div>
+        <div id="page3" class="form-page hidden">
+            <label>Enter your email:</label>
+            <input type="email" id="email" required>
+            <button onclick="validateAndNext(3, 'email')">Next</button>
+        </div>
+        <div id="page4" class="form-page hidden">
+            <label>Choose one:</label>
+            <select id="type">
+                <option value="">Select</option>
+                <option value="Product">Product</option>
+                <option value="Service">Service</option>
+            </select>
+            <button onclick="validateAndNext(4, 'type')">Next</button>
+        </div>
+        <div id="page5" class="form-page hidden">
+            <label>Choose one option:</label>
+            <select id="option">
+                <option value="">Select</option>
+                <option value="Option 1">Option 1</option>
+                <option value="Option 2">Option 2</option>
+                <option value="Option 3">Option 3</option>
+                <option value="Option 4">Option 4</option>
+                <option value="Option 5">Option 5</option>
+                <option value="Option 6">Option 6</option>
+            </select>
+            <button onclick="validateAndNext(5, 'option')">Next</button>
+        </div>
+        <div id="page6" class="form-page hidden">
+            <label>Select your country:</label>
+            <input type="text" id="country">
+            <button onclick="validateAndNext(6, 'country')">Next</button>
+        </div>
+        <div id="page7" class="form-page hidden">
+            <label>Select your budget:</label>
+            <select id="budget">
+                <option value="">Select</option>
+                <option value="Budget 1">Budget 1</option>
+                <option value="Budget 2">Budget 2</option>
+                <option value="Budget 3">Budget 3</option>
+                <option value="Budget 4">Budget 4</option>
+                <option value="Budget 5">Budget 5</option>
+            </select>
+            <button onclick="validateAndNext(7, 'budget')">Next</button>
+        </div>
+        <div id="page8" class="form-page hidden">
+            <label>Enter details:</label>
+            <input type="text" id="details">
+            <button onclick="validateAndNext(8, 'details')">Next</button>
+        </div>
+        <div id="page9" class="form-page hidden">
+            <label>Additional comments:</label>
+            <textarea id="comments"></textarea>
+            <button onclick="validateAndNext(9, 'comments')">Next</button>
+        </div>
+        <div id="page10" class="form-page hidden">
+            <label>More details:</label>
+            <input type="text" id="moreDetails">
+            <button onclick="validateAndNext(10, 'moreDetails')">Next</button>
+        </div>
+        <div id="page11" class="form-page hidden">
+            <label>Final input:</label>
+            <input type="text" id="finalInput">
+            <button onclick="submitForm()">Submit</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentPage = 1;
+        let formData = {};
+        
+        function nextPage() {
+            document.getElementById(`page${currentPage}`).classList.add('hidden');
+            currentPage++;
+            document.getElementById(`page${currentPage}`).classList.remove('hidden');
+            updateProgressBar();
+        }
+
+        function validateAndNext(page, field) {
+            let value = document.getElementById(field).value.trim();
+            if (value === "") {
+                alert("Please fill in the required field.");
+                return;
+            }
+            formData[field] = value;
+            nextPage();
+        }
+
+        function updateProgressBar() {
+            let progress = (currentPage - 1) * 10;
+            document.querySelector('.progress').style.width = `${progress}%`;
+        }
+
+        function submitForm() {
+            formData['finalInput'] = document.getElementById('finalInput').value.trim();
+            console.log("Survey Data:", formData);
+            alert("Survey submitted successfully!");
+        }
+    </script>
+</body>
+</html>
